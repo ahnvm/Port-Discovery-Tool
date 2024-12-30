@@ -13,21 +13,22 @@ def clear():
 def set_ip() -> str:
     while True:
         try:
-            ip = input(f"{colorama.Fore.CYAN}Enter IP Pattern (like 127.0.0): {colorama.Style.RESET_ALL}")
-            ip_list = ip.split(".")
-            if (os.system("ping -c 1 " + ip) == 0):
+            ip = input(f"{colorama.Fore.CYAN}Enter IP Pattern (like 127.0.0.1 or example.com): {colorama.Style.RESET_ALL}")
+            if (os.system("ping -c 1 -W 2 " + ip) == 0):
                 clear()
                 return ip
-            ip_list = [int(i) for i in ip_list]
-            if len(ip_list) == 4:
-                if ip_list[0] < 0 or ip_list[0] > 255 or ip_list[1] < 0 or ip_list[1] > 255 or ip_list[2] < 0 or ip_list[2] > 255 or ip_list[3] < 0 or ip_list[3] > 255:
-                    clear()
-                    print(f"{colorama.Fore.RED}[Input Error] Invalid IP{colorama.Style.RESET_ALL}")
-                else:
-                    return ip
             else:
                 clear()
-                print(f"{colorama.Fore.RED}[Input Error] You must enter 4 IP addresses or valid host{colorama.Style.RESET_ALL}")
+                print(f"{colorama.Fore.RED}[Input Error] Invalid IP or Hostname{colorama.Style.RESET_ALL}")
+                try:
+                    input(f"{colorama.Fore.YELLOW}Press enter to continue...{colorama.Style.RESET_ALL}")
+                except KeyboardInterrupt:
+                    print(f"{colorama.Fore.YELLOW}Exiting...{colorama.Style.RESET_ALL}")
+                    sys.exit(0)
+                except EOFError:
+                    print(f"{colorama.Fore.YELLOW}Exiting...{colorama.Style.RESET_ALL}")
+                    sys.exit(0)
+                return "0.0.0.0"
         except ValueError:
             clear()
             print(f"{colorama.Fore.RED}[Input Error] Invalid IP{colorama.Style.RESET_ALL}")
@@ -97,7 +98,8 @@ def print_port_list(outlist):
     upcount = 0
     downcount = 0
     open_ports = []
-    for port, status, timestamp in outlist:
+    sorted_outlist = sorted(outlist, key=lambda x: x[0])
+    for port, status, timestamp in sorted_outlist:
         formatted_time = datetime.fromtimestamp(timestamp).strftime("[%Y-%m-%d/%H:%M]")
         if status == "reachable":
             print(f"{colorama.Fore.YELLOW}{formatted_time} {colorama.Fore.GREEN}Port {port} is {status}{colorama.Style.RESET_ALL}")

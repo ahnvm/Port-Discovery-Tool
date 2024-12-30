@@ -9,6 +9,8 @@ g_ip = "0.0.0"
 g_port_range_list = [0, 65535]
 g_timeout = 1
 g_port_list = []
+g_known_ports = [20, 21, 22, 23, 25, 53, 80, 110, 123, 135, 139, 143, 443, 445, 993, 995, 3306, 3389, 8080, 8443]
+
 
 ascii_art = f"""
 {colorama.Fore.CYAN}
@@ -38,14 +40,17 @@ def menuChoices(choice):
         g_port_list.clear()
         g_port_list = menuOptions.scanPorts(g_ip, g_port_range_list, g_timeout, ["-v"])
     elif choice == "4":
-        g_ip = menuOptions.set_ip()
+        g_port_list.clear()
+        g_port_list = menuOptions.scanPorts(g_ip, g_known_ports, g_timeout, ["-s"])
     elif choice == "5":
-        g_port_range_list = menuOptions.set_port_range()
+        g_ip = menuOptions.set_ip()
     elif choice == "6":
+        g_port_range_list = menuOptions.set_port_range()
+    elif choice == "7":
         g_timeout = menuOptions.set_timeout()
-    elif choice == "7" and len(g_port_list) > 0:
-        menuOptions.print_port_list(g_port_list)
     elif choice == "8" and len(g_port_list) > 0:
+        menuOptions.print_port_list(g_port_list)
+    elif choice == "9" and len(g_port_list) > 0:
         menuOptions.save_results(g_port_list)
     elif choice == "0":
         print(f"{colorama.Fore.YELLOW}Exiting... Goodbye!")
@@ -61,12 +66,13 @@ def main():
         print(f"{colorama.Fore.GREEN}1.{colorama.Style.RESET_ALL} Scan Ip For Open Ports")
         print(f"{colorama.Fore.GREEN}2.{colorama.Style.RESET_ALL} Scan Ip For Open Ports (Silent)")
         print(f"{colorama.Fore.GREEN}3.{colorama.Style.RESET_ALL} Scan Ip For Open Ports (Verbose)")
-        print(f"{colorama.Fore.GREEN}4.{colorama.Style.RESET_ALL} Set IP {colorama.Fore.YELLOW}(Current IP: {g_ip}.({g_port_range_list[0]}-{g_port_range_list[1]}))")
-        print(f"{colorama.Fore.GREEN}5.{colorama.Style.RESET_ALL} Set Port Range {colorama.Fore.YELLOW}(Current Port Range: {g_port_range_list[0]}-{g_port_range_list[1]})")
-        print(f"{colorama.Fore.GREEN}6.{colorama.Style.RESET_ALL} Set Timeout {colorama.Fore.YELLOW}(Current Timeout: {g_timeout})")
+        print(f"{colorama.Fore.GREEN}4.{colorama.Style.RESET_ALL} Scan Known Ports {colorama.Fore.YELLOW}(Ports like shh, http, https, etc.)")
+        print(f"{colorama.Fore.GREEN}5.{colorama.Style.RESET_ALL} Set IP {colorama.Fore.YELLOW}(Current IP: {g_ip}.({g_port_range_list[0]}-{g_port_range_list[1]}))")
+        print(f"{colorama.Fore.GREEN}6.{colorama.Style.RESET_ALL} Set Port Range {colorama.Fore.YELLOW}(Current Port Range: {g_port_range_list[0]}-{g_port_range_list[1]})")
+        print(f"{colorama.Fore.GREEN}7.{colorama.Style.RESET_ALL} Set Timeout {colorama.Fore.YELLOW}(Current Timeout: {g_timeout})")
         if len(g_port_list) > 0:
-            print(f"{colorama.Fore.GREEN}7.{colorama.Style.RESET_ALL} Print Port List")
-            print(f"{colorama.Fore.GREEN}8.{colorama.Style.RESET_ALL} Save Port List")
+            print(f"{colorama.Fore.GREEN}8.{colorama.Style.RESET_ALL} Print Port List")
+            print(f"{colorama.Fore.GREEN}9.{colorama.Style.RESET_ALL} Save Port List")
         print(f"{colorama.Fore.GREEN}0.{colorama.Style.RESET_ALL} Exit")
         try: 
             option = int(input(f"{colorama.Fore.CYAN}Enter option: {colorama.Style.RESET_ALL}"))

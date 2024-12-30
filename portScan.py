@@ -4,7 +4,6 @@ import colorama
 from colorama import Fore
 from concurrent.futures import ThreadPoolExecutor
 import threading
-import sys
 from datetime import datetime
 
 colorama.init(autoreset=True)
@@ -36,7 +35,7 @@ def scan_port(ip: str, port: int, timeout: int):
             if not g_silent:
                 print(f"{formatted_time} {Fore.GREEN}Port {port} is reachable")
         s.close()
-        g_portlist.append((port, "reachable", datetime.now().timestamp()))  # Add reachable port to the list
+        g_portlist.append((port, "reachable", datetime.now().timestamp()))
     except socket.timeout:
         with console_lock:
             g_portlist.append((port, "timeout", datetime.now().timestamp()))
@@ -60,10 +59,13 @@ def portScanThreads(ip: str, port_range: list, timeout: int, args: list, thread_
 
     with ThreadPoolExecutor(max_workers=thread_count) as executor:
         futures = []
-        for port in range(port_range[0], port_range[1] + 1):
-            futures.append(executor.submit(scan_port, ip, port, timeout))
+        if (len(port_range) != 2):
+            for port in port_range:
+                futures.append(executor.submit(scan_port, ip, port, timeout))
+        else:
+            for port in range(port_range[0], port_range[1] + 1):
+                futures.append(executor.submit(scan_port, ip, port, timeout))
 
-        # Wait for all threads to finish
         for future in futures:
             future.result()
 
