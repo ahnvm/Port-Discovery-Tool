@@ -72,10 +72,6 @@ make && make run
 5. Set Port Range (Current Port Range: 0-65535)
 6. Set Timeout (Current Timeout: 1)
 Enter option: 1
-
-[2024-12-31/15:30] Port 22 is reachable
-[2024-12-31/15:30] Port 80 is reachable
-[2024-12-31/15:30] Port 443 is reachable
 ```
 
 ---
