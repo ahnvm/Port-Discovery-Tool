@@ -80,7 +80,7 @@ def save_results(outlist):
         return
 
     try:
-        sorted_portlist = sorted(outlist, key=lambda x: int(x[0].split(".")[3]))
+        sorted_portlist = sorted(outlist, key=lambda x: x[0])
     except ValueError as e:
         print(f"{colorama.Fore.RED}Error sorting ports: {e}{colorama.Style.RESET_ALL}")
         return
