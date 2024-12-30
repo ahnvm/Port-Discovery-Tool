@@ -24,7 +24,7 @@ This version includes host-based scanning, enabling users to scan ports using a 
 ### 1. Run the Program
 Execute the program using the following command:
 ```bash
-python3 port_scanner.py
+make && make run
 ```
 
 ### 2. Menu Options
