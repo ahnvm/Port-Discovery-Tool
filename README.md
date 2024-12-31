@@ -31,11 +31,12 @@ make && make run
 - **1:** Scan for open ports.
 - **2:** Silent scan for open ports (suppresses output).
 - **3:** Verbose scan for open ports (provides detailed error messages).
-- **4:** Set IP or hostname.
-- **5:** Set port range.
-- **6:** Set timeout duration.
-- **7:** Display scanned port results (if available).
-- **8:** Save scanned port results to `results.txt`.
+- **4:** Scan given IP for known hosts like http, ssh, etc.
+- **5:** Set IP or hostname.
+- **6:** Set port range.
+- **7:** Set timeout duration.
+- **8:** Display scanned port results (if available).
+- **9:** Save scanned port results to `results.txt`.
 - **0:** Exit the program.
 
 ### 3. Example Workflow
@@ -68,9 +69,10 @@ make && make run
 1. Scan Ip For Open Ports
 2. Scan Ip For Open Ports (Silent)
 3. Scan Ip For Open Ports (Verbose)
-4. Set IP (Current IP: 0.0.0.(0-65535))
-5. Set Port Range (Current Port Range: 0-65535)
-6. Set Timeout (Current Timeout: 1)
+4. Scan Known Ports (Ports like shh, http, https, etc.)
+5. Set IP (Current IP: 0.0.0.(0-65535))
+6. Set Port Range (Current Port Range: 0-65535)
+7. Set Timeout (Current Timeout: 1)
 Enter option: 1
 ```
 
